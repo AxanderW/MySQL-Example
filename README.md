@@ -1,10 +1,8 @@
 # Homework Assignment
 
-## Installation Instructions
 
-* Refer to the [installation guide](Installation.md) to install the necessary files.
 
-## Instructions
+## SQL script will perform the following queries
 
 * 1a. Display the first and last names of all actors from the table `actor`.
 
@@ -32,7 +30,6 @@
 
 * 5a. You cannot locate the schema of the `address` table. Which query would you use to re-create it?
 
-  * Hint: [https://dev.mysql.com/doc/refman/5.7/en/show-create-table.html](https://dev.mysql.com/doc/refman/5.7/en/show-create-table.html)
 
 * 6a. Use `JOIN` to display the first and last names, as well as the address, of each staff member. Use the tables `staff` and `address`:
 
@@ -97,11 +94,3 @@
 'staff_list'
 'store'
 ```
-
-## Uploading Homework
-
-* To submit this homework using BootCampSpot:
-
-  * Create a GitHub repository.
-  * Upload your .sql file with the completed queries.
-  * Submit a link to your GitHub repo through BootCampSpot.
