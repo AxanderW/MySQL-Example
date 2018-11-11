@@ -312,6 +312,13 @@ ORDER BY Frequency DESC;
 
 -- 7f. Write a query to display how much business, in dollars, each store brought in.
 
+
+-- 7g. Write a query to display for each store its store ID, city, and country.
+
+
+-- 7h. List the top five genres in gross revenue in descending order.
+--  (Hint: you may need to use the following tables: category, film_category, inventory, payment, and rental.)
+
 SELECT 
     cat.name, SUM(amount) AS 'Gross_Revenue'
 FROM
@@ -327,8 +334,6 @@ FROM
 GROUP BY cat.name
 ORDER BY Gross_Revenue DESC
 LIMIT 5;
-
-
 
 
 
