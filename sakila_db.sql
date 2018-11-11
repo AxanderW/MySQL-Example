@@ -166,24 +166,162 @@ FROM
 -- Use tables staff and payment.
 
 SELECT 
+    staff.staff_id,
     staff.first_name,
     staff.last_name,
-    SUM(payment.amount) AS 'Sum of Payment',
-    payment.payment_date
+    SUM(payment.amount) AS 'Sum of Payment'
+   --  payment.payment_date
 FROM
     staff
         JOIN
     payment USING (staff_id)
 WHERE
-    payment_date BETWEEN '2005-08-01 00:00:00' AND '2005-08-31 00:00:00';
+    payment_date BETWEEN '2005-08-01 00:00:00' AND '2005-08-31 00:00:00'
+    
+GROUP BY staff_id;
 
 -- 6c. List each film and the number of actors who are listed for that film.
 --  Use tables film_actor and film. Use inner join.
 
+SELECT 	film.title,
+		COUNT(film_actor.actor_id) AS '# of actors listed '
+
+FROM film
+
+JOIN film_actor USING (film_id)
+
+GROUP BY title; 
+		
+        
+		
 -- 6d. How many copies of the film Hunchback Impossible exist in the inventory system?
+SELECT 
+		f.title,
+		COUNT(i.film_id) AS 'Copies available'
 
--- 6e. Using the tables payment and customer and the JOIN command, list the total paid by each customer. List the customers alphabetically by last name:
+FROM inventory i
 
+JOIN film f USING(film_id)
+
+WHERE f.title = 'Hunchback Impossible';
+
+
+
+-- 6e. Using the tables payment and customer and the JOIN command, list the total paid by each customer. 
+-- List the customers alphabetically by last name:
+
+SELECT 	c.customer_id,
+		c.first_name,
+        c.last_name,
+		SUM(p.amount) AS 'Total Payment Amount'
+        
+FROM customer c
+
+JOIN payment p USING(customer_id)
+
+GROUP BY customer_id
+
+ORDER BY last_name ASC;
+
+-- 7a. 
+--  Use subqueries to display the titles of movies starting with the letters K and Q whose language is English.
+
+-- FIRST determine id used for english
+
+SELECT f.title
+
+FROM film f
+
+WHERE language_id IN (
+
+		SELECT language_id
+        
+        FROM language 
+        
+		WHERE name = 'ENGLISH'
+
+					)
+AND f.title LIKE 'K%'
+
+OR f.title LIKE   'Q%' ; 
+
+
+
+-- 7b. Use subqueries to display all actors who appear in the film Alone Trip.
+
+SELECT 	a.actor_id,
+		CONCAT(first_name, " ", last_name) AS 'Actors in film Alone Trip'
+		
+
+FROM actor a
+
+WHERE actor_id IN(
+
+	SELECT actor_id
+    FROM film_actor fa 
+    WHERE film_id IN (
+    
+		SELECT film_id
+        FROM film f
+        WHERE title = 'Alone Trip'
+    )
+
+
+);
+
+
+-- 7c. You want to run an email marketing campaign in Canada, for which you will need the names 
+-- and email addresses of all Canadian customers. Use joins to retrieve this information.
+
+
+/* EMAIL - customer table
+	
+    email
+    |
+    Customer table
+	| 
+	address_id
+	|
+	Address table
+	|
+	city_id
+	|
+	City table
+	|
+	country_id
+	|
+country = 'canada' on Country table
+
+
+*/
+
+SELECT c.email AS 'Canadian Customer Emails'
+
+FROM customer
+
+JOIN address USING (address_id)
+
+
+
+-- 7d. Sales have been lagging among young families, and you wish to target all
+--  family movies for a promotion. Identify all movies categorized as family films.
+
+-- 7e. Display the most frequently rented movies in descending order.
+
+-- 7f. Write a query to display how much business, in dollars, each store brought in.
+
+-- 7g. Write a query to display for each store its store ID, city, and country.
+
+-- 7h. List the top five genres in gross revenue in descending order. 
+-- (Hint: you may need to use the following tables: category, film_category, inventory,
+--  payment, and rental.)
+
+
+-- 8a. In your new role as an executive, you would like to have an easy way of viewing the Top five genres by gross revenue. Use the solution from the problem above to create a view. If you haven't solved 7h, you can substitute another query to create a view.
+
+-- 8b. How would you display the view that you created in 8a?
+
+-- 8c. You find that you no longer need the view top_five_genres. Write a query to delete it.
 
 
 
