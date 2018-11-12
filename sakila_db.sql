@@ -170,7 +170,7 @@ FROM
         JOIN
     payment USING (staff_id)
 WHERE
-    payment_date BETWEEN '2005-08-01 00:00:00' AND '2005-08-31 00:00:00'
+    payment_date BETWEEN '2005-08-01' AND '2005-08-31'
 GROUP BY staff_id;
 
 -- 6c. List each film and the number of actors who are listed for that film.
