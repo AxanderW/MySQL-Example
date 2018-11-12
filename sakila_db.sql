@@ -164,7 +164,7 @@ SELECT
     staff.staff_id,
     staff.first_name,
     staff.last_name,
-    SUM(payment.amount) AS 'Sum of Payment'
+    FORMAT(SUM(payment.amount),2) AS 'Sum of Payment'
 FROM
     staff
         JOIN
@@ -206,7 +206,7 @@ SELECT
     c.customer_id,
     c.first_name,
     c.last_name,
-    SUM(p.amount) AS 'Total Payment Amount'
+    FORMAT(SUM(p.amount),2) AS 'Total Payment Amount'
 FROM
     customer c
         JOIN
