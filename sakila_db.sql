@@ -95,6 +95,8 @@ HAVING COUNT(last_name) >= 2;
 
 -- 4c. The actor HARPO WILLIAMS was accidentally entered in the actor table as GROUCHO WILLIAMS. Write a query to fix the record.
 
+
+-- first get actor_id to identify unqiue record -- 
 SELECT 
     *
 FROM
@@ -121,16 +123,9 @@ WHERE
     actor_id = 172;
 
 -- 4d. Perhaps we were too hasty in changing GROUCHO to HARPO. It turns out that GROUCHO was the correct name after all! In a single query, if the 
--- first name of the actor is currently HARPO, change it to GROUCHO.
 
-SELECT 
-    *
-FROM
-    actor
-WHERE
-    first_name = 'HARPO';
 
--- Now perform single query update --
+-- perform single query update --
 
 UPDATE actor 
 SET 
@@ -312,15 +307,38 @@ ORDER BY Frequency DESC;
 
 -- 7f. Write a query to display how much business, in dollars, each store brought in.
 
+SELECT 
+    s.store_id, FORMAT(SUM(amount), 2) AS 'Revenue'
+FROM
+    payment p
+        JOIN
+    staff st ON (p.staff_id = st.staff_id)
+        JOIN
+    store s ON (st.store_id = s.store_id)
+GROUP BY store_id
+ORDER BY Revenue ASC;
+
 
 -- 7g. Write a query to display for each store its store ID, city, and country.
+
+SELECT 
+    st.store_id, ci.city AS 'City', co.country AS 'Country'
+FROM
+    country co
+        JOIN
+    city ci ON (co.country_id = ci.country_id)
+        JOIN
+    address a ON (ci.city_id = a.city_id)
+        JOIN
+    store st ON (a.address_id = st.address_id);
+
 
 
 -- 7h. List the top five genres in gross revenue in descending order.
 --  (Hint: you may need to use the following tables: category, film_category, inventory, payment, and rental.)
 
 SELECT 
-    cat.name, SUM(amount) AS 'Gross_Revenue'
+    cat.name, FORMAT(SUM(amount), 2) AS 'Gross_Revenue'
 FROM
     payment p
         JOIN
@@ -343,9 +361,11 @@ LIMIT 5;
 -- above to create a view. If you haven't solved 7h, you can substitute another query 
 -- to create a view.
 
+DROP VIEW IF EXISTS topFive;
+
 CREATE VIEW topFive AS
     SELECT 
-        cat.name, SUM(amount) AS 'Gross_Revenue'
+        cat.name, FORMAT(SUM(amount), 2) AS 'Gross_Revenue'
     FROM
         payment p
             JOIN
@@ -370,6 +390,13 @@ FROM
 
 -- 8c. You find that you no longer need the view top_five_genres. Write a query to delete it.
 
+DROP VIEW IF EXISTS topFive;
 
 
+-- verify results --
+
+SELECT 
+    *
+FROM
+    topFive;
 
