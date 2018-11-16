@@ -237,34 +237,28 @@ SELECT 		f.title
 FROM		film f
 
 WHERE		language_id IN (
-					SELECT 	language_id
-					
-					FROM	language
-					
+					SELECT 	language_id					
+					FROM	language					
                     WHERE	name = 'ENGLISH')
         
-AND f.title LIKE 'K%'
+AND 		f.title LIKE 'K%'
 
-OR f.title LIKE 'Q%';
+OR 			f.title LIKE 'Q%';
 
 -- ------------------------NEXT QUESTION-------------------------------------------------- --
 -- 7b. Use subqueries to display all actors who appear in the film Alone Trip.
 
-SELECT 		a.actor_id,
-			CONCAT(first_name, ' ', last_name) AS 'Actors in film Alone Trip'
+SELECT 	a.actor_id,
+		CONCAT(first_name, ' ', last_name) AS 'Actors in film Alone Trip'
 
-FROM		actor a
+FROM	actor a
 
-WHERE		actor_id IN(
-				SELECT 	actor_id
-				
-                FROM	film_actor fa
-				
+WHERE	actor_id IN(
+			SELECT 	actor_id				
+                FROM	film_actor fa				
 				WHERE	film_id IN (
-					SELECT 	film_id
-					
-                    FROM	film f
-               
+					SELECT 	film_id					
+                    FROM	film f               
 					WHERE	title = 'Alone Trip'));
 
 -- ------------------------NEXT QUESTION-------------------------------------------------- --
@@ -370,7 +364,7 @@ GROUP BY 	cat.name
 
 ORDER BY 	Gross_Revenue DESC
 
-LIMIT 5;
+LIMIT 		5;
 
 -- ------------------------NEXT QUESTION-------------------------------------------------- --
 -- 8a. In your new role as an executive, you would like to have an easy way of 
